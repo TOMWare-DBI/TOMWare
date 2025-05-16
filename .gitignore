@@ -1,0 +1,8 @@
+.vs/
+tomware.out*
+TOMWare/x32/Debug
+TOMWare/x64/Debug/
+tmp/*
+x64/Debug/
+Debug/*.obj
+TOMWare/Debug
