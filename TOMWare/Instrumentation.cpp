@@ -7,8 +7,8 @@ PIN_LOCK lock;
 std::map<std::string, RTNFunction> strategyMap;
 
 KNOB<BOOL> KnobDefendAll(KNOB_MODE_WRITEONCE, "pintool", "da", "0", "Ativa todas as contramedidas");
-KNOB<BOOL> KnobMemoryDefend(KNOB_MODE_WRITEONCE, "pintool", "dm", "0", "Ativa a contramedida MemcmpMask");
-KNOB<BOOL> KnobEnvsDefend(KNOB_MODE_WRITEONCE, "pintool", "de", "0", "Ativa a contramedida EnvReset");
+KNOB<BOOL> KnobMemoryDefend(KNOB_MODE_WRITEONCE, "pintool", "dm", "0", "Ativa a contramedida InstMemcmpMask");
+KNOB<BOOL> KnobEnvsDefend(KNOB_MODE_WRITEONCE, "pintool", "de", "0", "Ativa a contramedida SanitizePinEnvVars");
 KNOB<BOOL> KnobOverheadDefend(KNOB_MODE_WRITEONCE, "pintool", "do", "0", "Ativa a contramedida SkewMask"); // para testar a contramedida é necessário ativar a simulação de overhead -> simulateOverhead = true
 KNOB<BOOL> KnobSimulateOverhead(KNOB_MODE_WRITEONCE, "pintool", "go", "0", "Gerador de overhead para testar a contramedida SkewMask");
 
