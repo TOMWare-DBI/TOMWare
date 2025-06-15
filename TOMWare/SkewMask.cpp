@@ -1,19 +1,28 @@
 ﻿#include "SkewMask.h"
 
 /*──────────────── Estado global ────────────────*/
-static volatile WindowsAPI::LONG64 g_qpcSkewTicks = 0;   // excesso acumulado (ticks QPC)
+static volatile WindowsAPI::LONG g_qpcSkewTicks = 0;   // excesso acumulado (ticks QPC)
 static double g_qpcFreqHz = 0.0; // frequência do QPC
 static INT cGTCCalls = 0;
 static INT cGTC64Calls = 0;
 
-static inline void AccumulateSkewTicks(WindowsAPI::LONG64 d)
+static inline void AccumulateSkewTicks(WindowsAPI::LONG d)
 {
+#if defined (WIN32)
+    InterlockedExchangeAdd(&g_qpcSkewTicks, d);
+#else
     InterlockedExchangeAdd64(&g_qpcSkewTicks, d);
+#endif
 }
 
-static inline WindowsAPI::LONG64 CurrentSkewTicks()
+static inline WindowsAPI::LONG CurrentSkewTicks()
 {
+#if defined (WIN32)
+    return InterlockedCompareExchange(&g_qpcSkewTicks, 0, 0);
+#else
     return InterlockedCompareExchange64(&g_qpcSkewTicks, 0, 0);
+#endif
+
 }
 
 static inline ULONGLONG Skew100ns()
@@ -115,12 +124,11 @@ VOID SkewMask_ImageLoad(IMG img, VOID*)
         WindowsAPI::LARGE_INTEGER fq; QueryPerformanceFrequency(&fq);
         g_qpcFreqHz = (double)fq.QuadPart;
     }
-
     PatchApi(img, "Sleep", AFUNPTR(Hook_Sleep), (AFUNPTR*)&pSleep);
     PatchApi(img, "SleepEx", AFUNPTR(Hook_SleepEx), (AFUNPTR*)&pSleepEx);
     PatchApi(img, "QueryPerformanceCounter", AFUNPTR(Hook_QPC), (AFUNPTR*)&pQPC);
-    PatchApi(img, "GetTickCount", AFUNPTR(Hook_GTC), (AFUNPTR*)&pGTC);
-    PatchApi(img, "GetTickCount64", AFUNPTR(Hook_GTC64), (AFUNPTR*)&pGTC64);
+    //PatchApi(img, "GetTickCount", AFUNPTR(Hook_GTC), (AFUNPTR*)&pGTC);
+    //PatchApi(img, "GetTickCount64", AFUNPTR(Hook_GTC64), (AFUNPTR*)&pGTC64);
     PatchApi(img, "GetSystemTimePreciseAsFileTime", AFUNPTR(Hook_GSTPFT), (AFUNPTR*)&pGSTPFT);
     PatchApi(img, "QueryInterruptTimePrecise", AFUNPTR(Hook_QITP), (AFUNPTR*)&pQITP);
 }

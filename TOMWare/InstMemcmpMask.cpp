@@ -1,13 +1,12 @@
-﻿/**********************************************************************
- *  InstMemcmpMask.cpp – contramedida para varreduras de assinaturas  *
- *  (versão optimizada: verifica a assinatura antes de chamar memcmp) *
- *********************************************************************/
+﻿/********************************************************************************
+ *  InstMemcmpMask.cpp – contramedida para varreduras de assinaturas na memória *
+ ********************************************************************************/
 #include "InstMemcmpMask.h"
 #include <cctype>     // std::tolower
 #include <cstring>    // std::memcmp / wmemcmp
 
- /*--------------------------------------------------------------------
-  *  Redefinição local de _memicmp (algumas CRTs não exportam)         */
+ /*--------------------------------------------
+  *  Redefinição local de _memicmp           */
 #ifndef _MEMICMP_DEFINED
 #define _MEMICMP_DEFINED
 static int __cdecl _memicmp(const void* a, const void* b, size_t n)
@@ -25,7 +24,7 @@ static int __cdecl _memicmp(const void* a, const void* b, size_t n)
 #endif
 
 /*--------------------------------------------------------------------
- *  Assinaturas sensíveis                                             */
+ *  Assinaturas                                             */
 constexpr const char  P0[] = "PIN_";
 constexpr const char  P1[] = "pin.exe";
 constexpr const char  P2[] = "pinvm.dll";
@@ -37,13 +36,12 @@ constexpr const wchar_t W2[] = L"pinvm.dll";
 constexpr const wchar_t W3[] = L"pinipc.dll";
 
 /*--------------------------------------------------------------------
- *  Wrappers optimizados                                              */
+ *  Wrappers                                                         */
 #define WRAP(name) static auto name
 
  /*--- memcmp ANSI ---------------------------------------------------*/
 WRAP(wMemcmpA)(const void* a, const void* b, size_t n, AFUNPTR orig)->int
 {
-    /* shortcut para tamanhos de interesse */
     switch (n)
     {
     case 4:  if (memcmp(b, P0, 4) == 0) return 1;  break;
@@ -52,7 +50,7 @@ WRAP(wMemcmpA)(const void* a, const void* b, size_t n, AFUNPTR orig)->int
     case 10: if (memcmp(b, P3, 10) == 0) return 1;  break;
     }
     using fn = int(__cdecl*)(const void*, const void*, size_t);
-    return reinterpret_cast<fn>(orig)(a, b, n);         /* caminho normal */
+    return reinterpret_cast<fn>(orig)(a, b, n);
 }
 
 /*--- memicmp ANSI (case‑insensitive) -------------------------------*/
@@ -70,7 +68,7 @@ WRAP(wMemcmpI)(const void* a, const void* b, size_t n, AFUNPTR orig)->int
     return reinterpret_cast<fn>(orig)(a, b, n);
 }
 
-/*--- memcmp_s (CRT segura) -----------------------------------------*/
+/*--- memcmp_s (segura) -----------------------------------------*/
 WRAP(wMemcmpS)(const void* a, size_t as, const void* b, size_t bs,
     int* out, AFUNPTR orig)->errno_t
 {
@@ -125,7 +123,7 @@ WRAP(wRtlCmpMem)(const void* a, const void* b, SIZE_T n, AFUNPTR orig)->SIZE_T
         || (n == 7 && memcmp(b, P1, 7) == 0)
         || (n == 9 && memcmp(b, P2, 9) == 0)
         || (n == 10 && memcmp(b, P3, 10) == 0))
-        return 0;                                   /* “diferente” */
+        return 0;                                   /* força “diferente” */
     using fn = SIZE_T(NTAPI*)(const void*, const void*, SIZE_T);
     return reinterpret_cast<fn>(orig)(a, b, n);
 }
@@ -141,8 +139,8 @@ WRAP(wRtlEqMem)(const void* a, const void* b, SIZE_T n, AFUNPTR orig)->WindowsAP
     return reinterpret_cast<fn>(orig)(a, b, n);
 }
 
-/*--------------------------------------------------------------------
- *  Tabela de ganchos                                                 */
+/*------------------------------------------------------------------
+ *  Lista de hooks                                                 */
 struct Hook { const char* name; AFUNPTR wrap; int argc; };
 static const Hook gTable[] = {
     { "memcmp",            (AFUNPTR)wMemcmpA,   3 },
@@ -180,7 +178,7 @@ VOID InstMemcmpMask::InstrumentFunction(RTN rtn, VOID*)
                     IARG_PTR, orig,
                     IARG_END);
             }
-            else /* argc == 5 */
+            else /* 5 args */
             {
                 RTN_ReplaceSignature(rtn, h->wrap,
                     IARG_FUNCARG_ENTRYPOINT_VALUE, 0,

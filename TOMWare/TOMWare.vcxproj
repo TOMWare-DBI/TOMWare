@@ -27,13 +27,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -80,32 +80,75 @@
     <GenerateManifest>false</GenerateManifest>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;TARGET_IA32;TARGET_WINDOWS;_STLP_WIN32;PIN_CRT=1;__LP64__;_WINDLL;_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS;PIN_NO_STDLIB_EXTENSIONS;_WINDOWS_H_PATH_=C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <AdditionalIncludeDirectories>..\pin\source\include\pin;..\pin\source\include\pin\gen;..\pin\extras\xed-ia32\include\xed;..\pin\extras\components\include;..\pin\extras\stlport\include;..\pin\extras;..\pin\extras\libstdc++\include;..\pin\extras\crt\include;..\pin\extras\crt;..\pin\extras\crt\include\arch-x86;..\pin\extras\crt\include\kernel\uapi;..\pin\extras\crt\include\kernel\uapi\asm-x86;..\pin\source\tools\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointModel>Strict</FloatingPointModel>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4530;5208;4267;4005;4210;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/GR- /GS- /EHs- /EHa- /FP:strict /Oi- /FIinclude/msvc_compat.h %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\pin\ia32\lib;..\pin\ia32\lib-ext;..\pin\extras\xed-ia32\lib;..\pin\extras\components\lib\ia32;..\pin\ia32\runtime\pincrt;$(SolutionDir)$(Platform)\$(Configuration)\;Dbghelp.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pin.lib;pinipc.lib;xed.lib;atomic.lib;debugger-protocol.lib;pincrt.lib;kernel32.lib;crtbeginS.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>Ptrace_DllMainCRTStartup</EntryPointSymbol>
+      <BaseAddress>0xC5000000</BaseAddress>
+      <AdditionalOptions>/export:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;TARGET_IA32;TARGET_WINDOWS;_STLP_WIN32;PIN_CRT=1;__LP64__;_WINDLL;_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS;PIN_NO_STDLIB_EXTENSIONS;_WINDOWS_H_PATH_=C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <AdditionalIncludeDirectories>..\pin\source\include\pin;..\pin\source\include\pin\gen;..\pin\extras\xed-ia32\include\xed;..\pin\extras\components\include;..\pin\extras\stlport\include;..\pin\extras;..\pin\extras\libstdc++\include;..\pin\extras\crt\include;..\pin\extras\crt;..\pin\extras\crt\include\arch-x86;..\pin\extras\crt\include\kernel\uapi;..\pin\extras\crt\include\kernel\uapi\asm-x86;..\pin\source\tools\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FloatingPointModel>Strict</FloatingPointModel>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4530;5208;4267;4005;4210;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/GR- /GS- /EHs- /EHa- /FP:strict /Oi- /FIinclude/msvc_compat.h %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\pin\ia32\lib;..\pin\ia32\lib-ext;..\pin\extras\xed-ia32\lib;..\pin\extras\components\lib\ia32;..\pin\ia32\runtime\pincrt;$(SolutionDir)$(Platform)\$(Configuration)\;Dbghelp.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pin.lib;pinipc.lib;xed.lib;atomic.lib;debugger-protocol.lib;pincrt.lib;kernel32.lib;crtbeginS.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <EntryPointSymbol>Ptrace_DllMainCRTStartup</EntryPointSymbol>
+      <BaseAddress>0xC5000000</BaseAddress>
+      <AdditionalOptions>/export:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,7 +158,7 @@
       </SDLCheck>
       <PreprocessorDefinitions>TARGET_IA32E;HOST_IA32E;TARGET_WINDOWS;PIN_CRT=1;__LP64__;_WINDLL;_UNICODE;UNICODE;_WINDOWS_H_PATH_=C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>..\pin\include\pin;..\pin\include\pin\gen;..\pin\extras\xed-intel64\include\xed;..\pin\extras\components\include;..\pin\extras\stlport\include;..\pin\extras;..\pin\extras\libstdc++\include;..\pin\extras\crt\include;..\pin\extras\crt;..\pin\extras\crt\include\arch-x86_64;..\pin\extras\crt\include\kernel\uapi;..\pin\extras\crt\include\kernel\uapi\asm-x86;..\pin\source\tools\InstLib;..\pin\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\pin\source\include\pin;..\pin\source\include\pin\gen;..\pin\extras\xed-intel64\include\xed;..\pin\extras\components\include;..\pin\extras\stlport\include;..\pin\extras;..\pin\extras\libstdc++\include;..\pin\extras\crt\include;..\pin\extras\crt;..\pin\extras\crt\include\arch-x86_64;..\pin\extras\crt\include\kernel\uapi;..\pin\extras\crt\include\kernel\uapi\asm-x86;..\pin\source\tools\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -133,7 +176,7 @@
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\pin\intel64\lib;..\pin\intel64\lib-ext;..\pin\extras\xed-intel64\lib;..\pin\extras\components\lib\intel64;..\pin\source\tools\InstLib\obj-intel64;..\pin\intel64\runtime\pincrt;$(SolutionDir)$(Platform)\$(Configuration)\;Dbghelp.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>pin.lib;pinipc.lib;xed.lib;atomic.lib;debugger-protocol.lib;pincrt.lib;controller.lib;kernel32.lib;crtbeginS.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>pin.lib;pinipc.lib;xed.lib;atomic.lib;debugger-protocol.lib;pincrt.lib;kernel32.lib;crtbeginS.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <BaseAddress>0xC5000000</BaseAddress>
@@ -150,7 +193,7 @@
       </SDLCheck>
       <PreprocessorDefinitions>TARGET_IA32E;HOST_IA32E;TARGET_WINDOWS;PIN_CRT=1;__LP64__;_WINDLL;_UNICODE;UNICODE;_WINDOWS_H_PATH_=C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>..\pin\include\pin;..\pin\include\pin\gen;..\pin\extras\xed-intel64\include\xed;..\pin\extras\components\include;..\pin\extras\stlport\include;..\pin\extras;..\pin\extras\libstdc++\include;..\pin\extras\crt\include;..\pin\extras\crt;..\pin\extras\crt\include\arch-x86_64;..\pin\extras\crt\include\kernel\uapi;..\pin\extras\crt\include\kernel\uapi\asm-x86;..\pin\source\tools\InstLib;..\pin\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\pin\source\include\pin;..\pin\source\include\pin\gen;..\pin\extras\xed-intel64\include\xed;..\pin\extras\components\include;..\pin\extras\stlport\include;..\pin\extras;..\pin\extras\libstdc++\include;..\pin\extras\crt\include;..\pin\extras\crt;..\pin\extras\crt\include\arch-x86_64;..\pin\extras\crt\include\kernel\uapi;..\pin\extras\crt\include\kernel\uapi\asm-x86;..\pin\source\tools\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
@@ -170,7 +213,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\pin\intel64\lib;..\pin\intel64\lib-ext;..\pin\extras\xed-intel64\lib;..\pin\extras\components\lib\intel64;..\pin\source\tools\InstLib\obj-intel64;..\pin\intel64\runtime\pincrt;$(SolutionDir)$(Platform)\$(Configuration)\;Dbghelp.lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>pin.lib;pinipc.lib;xed.lib;atomic.lib;debugger-protocol.lib;pincrt.lib;controller.lib;kernel32.lib;crtbeginS.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>pin.lib;pinipc.lib;xed.lib;atomic.lib;debugger-protocol.lib;pincrt.lib;kernel32.lib;crtbeginS.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <BaseAddress>0xC5000000</BaseAddress>
@@ -196,6 +239,9 @@
     <ClInclude Include="NtStructures.h" />
     <ClInclude Include="SkewMask.h" />
     <ClInclude Include="Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
