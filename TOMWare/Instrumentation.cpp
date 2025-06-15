@@ -1,5 +1,5 @@
 #include "Instrumentation.h"
-#include "InstEnvReset.h"
+#include "SanitizePinEnvVars.h"
 #include "SkewMask.h"
 
 PIN_LOCK lock;

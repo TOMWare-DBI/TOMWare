@@ -1,6 +1,6 @@
 #pragma once
-#ifndef INST_ENV_RESET_H
-#define INST_ENV_RESET_H
+#ifndef SANITIZE_PIN_ENV_VARS
+#define SANITIZE_PIN_ENV_VARS
 
 #include "pin.H"
 #include <iostream>
@@ -23,4 +23,4 @@ static SIZE_T EnvSizeBytes(const PWCHAR env);
 static EnvScrubResult UnsetAndScrub(const wchar_t* nameW);
 void SanitizePinEnvVars();
 
-#endif // INST_ENV_RESET_H
+#endif // SANITIZE_PIN_ENV_VARS

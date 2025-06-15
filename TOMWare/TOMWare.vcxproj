@@ -222,7 +222,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="InstEnvReset.cpp" />
+    <ClCompile Include="SanitizePinEnvVars.cpp" />
     <ClCompile Include="InstMemcmpMask.cpp" />
     <ClCompile Include="SkewMask.cpp" />
     <ClCompile Include="TOMWare.cpp" />
@@ -231,7 +231,7 @@
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InstEnvReset.h" />
+    <ClInclude Include="SanitizePinEnvVars.h" />
     <ClInclude Include="InstMemcmpMask.h" />
     <ClInclude Include="Instrumentation.h" />
     <ClInclude Include="InstrumentationStrategy.h" />

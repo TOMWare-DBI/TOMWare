@@ -1,4 +1,4 @@
-﻿#include "InstEnvReset.h"
+﻿#include "SanitizePinEnvVars.h"
 
 // obtem o tamanho (bytes) do bloco UNICODE terminado em \0\0
 static SIZE_T EnvSizeBytes(const PWCHAR env)
