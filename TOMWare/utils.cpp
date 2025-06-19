@@ -340,41 +340,6 @@ void GetParentProcessName() {
     }
 }
 
-DWORD GetProcessIdByName(std::string processName) {
-    using namespace WindowsAPI;
-    DWORD processId = 0;
-
-    // Cria um snapshot de todos os processos
-    HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-    if (hSnapshot == INVALID_HANDLE_VALUE) {
-        std::cerr << "Erro ao criar snapshot.\n";
-        return 0;
-    }
-
-    PROCESSENTRY32 pe32;
-    pe32.dwSize = sizeof(PROCESSENTRY32);
-
-    // Percorre os processos no snapshot
-    if (Process32First(hSnapshot, &pe32)) {
-        do {
-            // Compara o nome do executável
-            std::transform(processName.begin(), processName.end(), processName.begin(), ::tolower);
-            std::string pName = WStringToString(pe32.szExeFile);
-            std::transform(pName.begin(), pName.end(), pName.begin(), ::tolower);
-            if (processName == pName) {
-                processId = pe32.th32ProcessID;
-                break;
-            }
-        } while (Process32Next(hSnapshot, &pe32));
-    }
-    else {
-        std::cerr << "Erro ao percorrer os processos.\n";
-    }
-
-    CloseHandle(hSnapshot);
-    return processId;
-}
-
 std::string getFileName(const std::string& filePath) {
     // Encontra a última ocorrência de '\' ou '/'
     size_t pos = filePath.find_last_of("\\/");

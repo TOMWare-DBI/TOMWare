@@ -1,9 +1,6 @@
 #pragma once
 #ifndef UTILS_H
 #define UTILS_H
-#define PIN_NO_STDLIB_EXTENSIONS
-#define WIN32_LEAN_AND_MEAN   // opcional, evita macros min/max
-#define NOMINMAX
 #include "pin.H"
 namespace WindowsAPI
 {
@@ -40,6 +37,5 @@ std::string ExtractModuleName(const std::string& fullPath);
 std::string toUpperCase(const std::string& str);
 VOID PrintTrace(std::deque<std::string>& rtnTrace);
 void GetParentProcessName();
-DWORD GetProcessIdByName(std::string processName);
 std::string getFileName(const std::string& filePath);
 #endif // UTILS_H
