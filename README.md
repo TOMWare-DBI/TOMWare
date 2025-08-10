@@ -157,7 +157,7 @@ TOMWare/                              ← Diretório principal do repositório.
 <PATH_PIN_x64>\pin.exe -t <PATH_TOMWARE>\TOMWare.dll [ -da | -de | -dm | -do -go ] -- C:\Samples\alvo.exe
 ```
 
-### Teste mínimo (repositório como diretório corrente)
+### Teste mínimo (repositório como diretório atual)
 
 ```powershell
 .\pin\pin.exe -t .\x64\Debug\TOMWare.dll -de -- .\Resultados\Apps-Teste\TestGetEnvironments.exe
@@ -183,6 +183,8 @@ TOMWare/                              ← Diretório principal do repositório.
 
 ### Experimentos
 
+> Execute os comandos com o  PowerShell
+
 #### (1) Execução **sem** Pin (baseline)
 
 ```powershell
@@ -201,13 +203,16 @@ TOMWare/                              ← Diretório principal do repositório.
 .\pin\pin.exe -t .\x64\Debug\TOMWare.dll -dm -- .\Resultados\Apps-Teste\TestGetEnvironments.exe
 ```
 
-#### (4) Execução com medição de tempo (PowerShell)
+#### (4) Execução com medição de tempo
 
 > Use **`Measure-Command`**.
 
 ```powershell
 Measure-Command { .\pin\pin.exe -t .\x64\Debug\TOMWare.dll -dm -- .\Resultados\Apps-Teste\TestGetEnvironments.exe }
 ```
+
+> 📌 **Dica:** Use o Measure-Command para medir tempo de execução de qualquer comando usando a sintaxe `Measure-Command { <COMANDO> }`.
+
 
 #### (5) Execução em loop (1000 repetições)
 
