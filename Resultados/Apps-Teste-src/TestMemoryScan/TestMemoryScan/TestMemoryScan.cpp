@@ -86,7 +86,8 @@ int wmain()
 {
     SetConsoleOutputCP(CP_UTF8);
 
-    testGetTickCountConsistency(1000, &ScanMemoryForPinStrings, L"tick_test_log-MemoryScan.txt");
+    ScanMemoryForPinStrings();
+    //testGetTickCountConsistency(1000, &ScanMemoryForPinStrings, L"tick_test_log-MemoryScan.txt");
 
     system("pause");
     return 0;

@@ -96,7 +96,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>HOST_IA32;__i386__;WIN32;TARGET_IA32;TARGET_WINDOWS;PIN_CRT=1;_WINDLL;_UNICODE;UNICODE;_WINDOWS_H_PATH_=C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/um</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HOST_IA32;__i386__;WIN32;TARGET_IA32;TARGET_WINDOWS;PIN_CRT=1;_WINDLL;_UNICODE;UNICODE;_WINDOWS_H_PATH_=C:/Program Files (x86)/Windows Kits/10/Include/10.0.19041.0/um</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
       <AdditionalIncludeDirectories>..\pin\source\include\pin;..\pin\source\include\pin\gen;..\pin\extras\xed-ia32\include\xed;..\pin\extras\components\include;..\pin\extras\stlport\include;..\pin\extras;..\pin\extras\libstdc++\include;..\pin\extras\crt\include;..\pin\extras\crt;..\pin\extras\crt\include\arch-x86;..\pin\extras\crt\include\kernel\uapi;..\pin\extras\crt\include\kernel\uapi\asm-x86;..\pin\source\tools\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
